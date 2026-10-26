@@ -105,3 +105,16 @@
 ## 免责声明
 
 本项目用于授权环境中的学术安全评估与防御研究。第三方代码、数据和模型遵循各自的许可与使用条款。本仓库不包含第三方模型权重或完整原始数据集。
+
+
+## Server quickstart
+
+See [docs/QUICKSTART_SERVER.md](docs/QUICKSTART_SERVER.md) for the first server setup steps. Start with P0 only:
+
+    python -m venv .venv
+    source .venv/bin/activate
+    pip install -r requirements-dev.txt
+    python scripts/check_environment.py
+    python -m pytest -q
+
+These commands do not download model weights or datasets. Do not launch a GPU experiment until the environment report has been reviewed.
