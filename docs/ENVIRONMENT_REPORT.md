@@ -40,3 +40,11 @@
 - 每个 GPU 的 BF16 matmul 与同步是否通过。
 - 当前环境中 `Qwen2_5_VLForConditionalGeneration` 是否可导入。
 - 服务器磁盘剩余空间与 Hugging Face cache 位置。
+
+
+## Model/framework compatibility note (added after checking official docs)
+
+- Qwen3-VL official README states Transformers >= 4.57.0; the current 4.51.0 environment is not the right environment for Qwen3-VL. See https://github.com/QwenLM/Qwen3-VL/blob/main/README.md
+- Qwen2.5-VL is documented in Transformers 4.49.0 and later; its official Qwen quickstart recommends Python >= 3.10 and PyTorch >= 2.3. The current Transformers 4.51.0 may provide the model class, but PyTorch 2.1.2 is below that recommendation. See https://huggingface.co/docs/transformers/v4.49.0/en/model_doc/qwen2_5_vl and https://qwen.readthedocs.io/en/v2.5/getting_started/quickstart.html
+- Therefore, keep the existing environment unchanged. After the CUDA smoke test, create a separate candidate environment for Qwen2.5-VL using a mutually compatible PyTorch/torchvision pair (for example PyTorch 2.5.1 + torchvision 0.20.1 for CUDA 12.1) and Transformers 4.51.0. This is a proposed combination, not yet runtime-verified on the server.
+- Do not install vLLM into the current environment. Revisit vLLM only after a target model has run successfully through Transformers and the server driver/version constraints are known.
