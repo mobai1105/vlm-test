@@ -1,0 +1,32 @@
+project:
+  name: vlm-test
+  stage: P0
+  seed: 42
+  local_only: true
+
+paths:
+  data_root_env: VLM_TEST_DATA_ROOT
+  model_root_env: VLM_TEST_MODEL_ROOT
+  output_root_env: VLM_TEST_OUTPUT_ROOT
+
+pilot:
+  max_source_intents: 40
+  model_id: Qwen/Qwen3-VL-8B-Instruct
+  second_model_id: OpenGVLab/InternVL3-8B
+  conditions: [text_only, image_text, benign_control]
+  languages: [en, zh, ar]
+  repeats: 2
+  seed: 42
+
+evaluation:
+  labels: [safe, unsafe, uncertain]
+  require_manual_calibration: true
+  allow_cloud_judge: false
+  allow_raw_output_in_aggregate: false
+
+runtime:
+  max_new_tokens: 256
+  temperature: 0.0
+  max_model_len: 8192
+  cuda_visible_devices: "0"
+  # P0 does not download data or weights.
